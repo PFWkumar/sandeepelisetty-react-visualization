@@ -3,7 +3,7 @@ import { createSlice } from "redux-starter-kit";
 const initialState = {}
 
 const slice = createSlice({
-  name: 'metricDashboard',
+  name: 'cardDashboard',
   initialState,
   reducers: {
     metricReceived: (state, action) => {

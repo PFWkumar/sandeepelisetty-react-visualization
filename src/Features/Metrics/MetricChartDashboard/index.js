@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import Select from '@material-ui/core/Select';
+import MetricSelect from './MetricSelect';
 
 function MetricChartDashboard() {
-  const metricOptions = useSelector(state => state.metrics.options)
   return (
     <div>
-      <Select autoWidth placeholder="Select Metric or Metrics" multiple />
+      <MetricSelect />
     </div>
   )
 }

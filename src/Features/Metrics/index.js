@@ -15,7 +15,7 @@ const AvailableMetricsQuery = `
 
 function MetricsHome() {
   const dispatch = useDispatch();
-  const [toggle, setToggle] = useState('dashboard');
+  const [toggle, setToggle] = useState('graphs');
   const [availableMetricsResponse] = useQuery({ query: AvailableMetricsQuery });
   useEffect(() => {
     const { data } = availableMetricsResponse;
