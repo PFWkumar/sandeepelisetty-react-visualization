@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default () => {
+function Header() {
   const classes = useStyles();
 
   const name = "Sandeep's";
@@ -26,3 +26,5 @@ export default () => {
     </AppBar>
   );
 };
+
+export default Header;
