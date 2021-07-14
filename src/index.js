@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import createStore from './store';
 import AppContainer from './components/AppContainer';
 import Header from './components/Header';
-import Dashboard from './Features/Dashboard';
+import MetricsHome from './Features/Metrics';
 
 const store = createStore();
 
@@ -50,7 +50,7 @@ const App = () => (
       <Provider store={store}>
         <Header />
         <AppContainer>
-          <Dashboard />
+          <MetricsHome />
           <ToastContainer />
         </AppContainer>
       </Provider>
