@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 function MetricCard({ metricName }) {
   const styles = useStyles();
-  const metric = useSelector(state => state.metrics[metricName] || {})
+  const metric = useSelector(state => state.metricDashboard[metricName] || {})
   return (
     <Card className={styles.root}>
       <CardContent>
