@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'urql';
 import Box from '@material-ui/core/Box';
+import InsertChartIcon from '@material-ui/icons/InsertChart';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import MetricCardDashboard from './MetricCardDashboard';
 import MetricToggle from './MetricToggle';
 import { actions as metricActions } from './reducer';
@@ -12,6 +14,11 @@ const AvailableMetricsQuery = `
     getMetrics
   }
 `
+
+const options = [
+  { value: 'dashboard', Icon: DashboardIcon },
+  { value: 'graphs', Icon: InsertChartIcon }
+]
 
 function MetricsHome() {
   const dispatch = useDispatch();
@@ -25,7 +32,7 @@ function MetricsHome() {
   }, [availableMetricsResponse, dispatch]);
   return (
     <Box>
-      <MetricToggle value={toggle} onToggle={setToggle} />
+      <MetricToggle value={toggle} onToggle={setToggle} options={options} />
       {toggle === 'dashboard' ? <MetricCardDashboard /> : <MetricChartDashboard />}
     </Box>
   )

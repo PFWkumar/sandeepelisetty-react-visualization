@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Provider as UrqlProvider, createClient, defaultExchanges, subscriptionExchange } from 'urql';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { Provider as UrqlProvider } from 'urql';
 import { ToastContainer } from 'react-toastify';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,22 +11,9 @@ import createStore from './store';
 import AppContainer from './components/AppContainer';
 import Header from './components/Header';
 import MetricsHome from './Features/Metrics';
+import graphqlClient from './gl-client';
 
 const store = createStore();
-
-const subscriptionClient = new SubscriptionClient('ws://react.eogresources.com/graphql', { reconnect: true });
-
-const graphqlClient = createClient({
-  url: 'https://react.eogresources.com/graphql',
-  exchanges: [
-    ...defaultExchanges,
-    subscriptionExchange({
-      forwardSubscription(operation) {
-        return subscriptionClient.request(operation);
-      },
-    }),
-  ],
-});
 
 const theme = createMuiTheme({
   palette: {

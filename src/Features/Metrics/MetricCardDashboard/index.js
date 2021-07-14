@@ -5,7 +5,7 @@ import { useSubscription as _useSubscription } from 'urql';
 import MetricCard from '../MetricCard';
 import { actions as metricsActions } from './reducer';
 
-const MetricsQuery = `
+export const MetricsQuery = `
   subscription MessageSub {
     newMeasurement {
       metric

@@ -6,3 +6,9 @@ export const metricLabels = {
   flareTemp: 'Flare Temperature',
   casingPressure: 'Casing Pressure'
 }
+
+export const chartTypes = {
+  M30: 'M30',
+  M60: 'M60',
+  RealTime: 'RealTime'
+}

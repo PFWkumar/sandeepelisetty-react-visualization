@@ -1,6 +1,4 @@
 import React, { useCallback } from 'react';
-import InsertChartIcon from '@material-ui/icons/InsertChart';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import { makeStyles } from '@material-ui/core';
@@ -16,19 +14,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function MetricToggle({ value, onToggle }) {
+function MetricToggle({ value, onToggle, options }) {
   const styles = useStyles();
   const onChange = useCallback((_, value) => {
     onToggle(value)
   }, [onToggle]);
   return (
     <ToggleButtonGroup value={value} onChange={onChange} exclusive classes={styles}>
-      <ToggleButton value="dashboard">
-        <DashboardIcon />
-      </ToggleButton>
-      <ToggleButton value="graphs">
-        <InsertChartIcon />
-      </ToggleButton>
+      {options.map(({ value, Icon }) => (
+        <ToggleButton value={value} key={value}>
+          <Icon />
+        </ToggleButton>
+      ))}
     </ToggleButtonGroup>
   )
 }

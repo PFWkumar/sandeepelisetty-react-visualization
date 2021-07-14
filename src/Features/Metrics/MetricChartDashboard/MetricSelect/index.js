@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
@@ -8,39 +8,49 @@ import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 
+import { actions as chartActions } from '../reducer';
 import { metricLabels } from '../../constants';
 
-const useInputStyles = makeStyles({
+const useInputStyles = makeStyles(theme => ({
   root: {
     border: '1px solid #ccc',
     borderRadius: '5px',
+    // marginBottom: theme.spacing(2),
+    minHeight: 48,
   }
-})
+}))
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  root: {
+    marginBottom: theme.spacing(2),
+  },
   chips: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   chip: {
-    margin: '0px 5px',
+    margin: theme.spacing(1) / 2,
   },
-})
+}))
 
 function MetricSelect() {
-  const [selection, setSelection] = useState([])
+  const dispatch = useDispatch();
   const inputClasses = useInputStyles();
   const classes = useStyles();
-  const metricOptions = useSelector(state => state.metrics.options)
+
+  const { selection, metricOptions } = useSelector(state => ({
+    selection: state.chartDashboard.selectedMetrics,
+    metricOptions: state.metrics.options
+  }));
 
   const handleChange = useCallback(event => {
     const { value } = event.target;
-    setSelection(value);
-  }, [setSelection]);
+    dispatch(chartActions.setSelectedMetrics(value));
+  }, [dispatch]);
 
   const removeSelectedMetric = useCallback(metric => {
-    setSelection(selection.filter(value => metric !== value))
-  }, [selection])
+    dispatch(chartActions.setSelectedMetrics(selection.filter(value => metric !== value)));
+  }, [selection, dispatch])
 
   function renderChip(selected) {
     return (
