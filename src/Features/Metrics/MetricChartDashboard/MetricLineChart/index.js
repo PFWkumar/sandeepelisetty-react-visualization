@@ -60,6 +60,13 @@ function formatXAxis(tickItem) {
   return `${date.getHours()}:${date.getMinutes()}`;
 }
 
+function CustomTooltip(props) {
+  console.log(props);
+  return (
+    <div>Tool</div>
+  )
+}
+
 function MetricLineChart({ metricName }) {
   const styles = useStyles();
   const data = useSelector(state => {
@@ -74,7 +81,7 @@ function MetricLineChart({ metricName }) {
       <LineChart data={data}>
         <XAxis dataKey="at" tickFormatter={formatXAxis} />
         <YAxis />
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} />
         <Line dataKey="value" stroke="#8884d8" dot={false} />
       </LineChart>
     </ResponsiveContainer>
