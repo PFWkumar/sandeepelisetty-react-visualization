@@ -1,5 +1,6 @@
-import { makeStyles } from '@material-ui/core';
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
 import { LineChart, XAxis, YAxis, Tooltip, Legend, Line, ResponsiveContainer } from 'recharts';
 import { chartTypes } from '../../constants';
@@ -60,11 +61,20 @@ function formatXAxis(tickItem) {
   return `${date.getHours()}:${date.getMinutes()}`;
 }
 
-function CustomTooltip(props) {
-  console.log(props);
-  return (
-    <div>Tool</div>
-  )
+function CustomTooltip({ active, payload }) {
+  if (active && payload && payload.length) {
+    return (
+      <div>
+        <Typography variant="h5" color="textSecondary" component="span">
+          {payload[0].value}
+        </Typography>
+        <Typography variant="h6" component="span">
+          {' '}{payload[0].payload.unit}
+        </Typography>
+      </div>
+    );
+  }
+  return null;
 }
 
 function MetricLineChart({ metricName }) {
