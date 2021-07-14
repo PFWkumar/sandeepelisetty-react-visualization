@@ -8,35 +8,47 @@ const slice = createSlice({
   initialState: {
     selectedMetrics: [],
     chartType: chartTypes.M30,
-    realTimeDataPoints: [],
-    historicalDataPoints: [],
+    realTimeDataPoints: {},
+    historicalDataPoints: {},
     after: subtractTimeInMinutes(30),
     before: subtractTimeInMinutes(),
   },
   reducers: {
     setSelectedMetrics: (state, action) => {
       state.selectedMetrics = action.payload;
+      state.realTimeDataPoints = {};
+      state.historicalDataPoints = {};
+      if (state.chartType !== chartTypes.RealTime) {
+        state.after = subtractTimeInMinutes(state.chartType === chartTypes.M30 ? 30 : 60);
+        state.before = subtractTimeInMinutes();
+      }
+      for (let index = 0; index < state.selectedMetrics.length; index++) {
+        const metric = state.selectedMetrics[index];
+        state.realTimeDataPoints[metric] = [];
+        state.historicalDataPoints[metric] = [];
+      }
     },
     setChartType: (state, action) => {
       state.chartType = action.payload;
       if (state.chartType !== chartTypes.RealTime) {
         state.after = subtractTimeInMinutes(state.chartType === chartTypes.M30 ? 30 : 60);
-        state.before = subtractTimeInMinutes();
+        state.before = subtractTimeInMinutes();       
       }
     },
     addRealTimeDataPoint: (state, action) => {
-      state.realTimeDataPoints.push(action.payload);
-      // todo:
-      // if (state.realTimeDataPoints.length > 300) {
-      //   state.realTimeDataPoints = state.realTimeDataPoints.slice(-1, -20);
-      // }
+      const { metric } = action.payload;
+      if (state.selectedMetrics.includes(metric)) {
+        state.realTimeDataPoints[metric].push(action.payload);
+      }
     },
     addHistoricalDataPoints: (state, action) => {
-      state.historicalDataPoints = action.payload;
+      action.payload.forEach(data => {
+        state.historicalDataPoints[data.metric] = data.measurements
+      })
     },
     resetEverything: (state, _) => {
-      state.realTimeDataPoints = [];
-      state.historicalDataPoints = [];
+      state.realTimeDataPoints = {};
+      state.historicalDataPoints = {};
     }
   }
 });
