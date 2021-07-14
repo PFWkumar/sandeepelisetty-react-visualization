@@ -22,7 +22,7 @@ const options = [
 
 function MetricsHome() {
   const dispatch = useDispatch();
-  const [toggle, setToggle] = useState('graphs');
+  const [toggle, setToggle] = useState('dashboard');
   const [availableMetricsResponse] = useQuery({ query: AvailableMetricsQuery });
   useEffect(() => {
     const { data } = availableMetricsResponse;
